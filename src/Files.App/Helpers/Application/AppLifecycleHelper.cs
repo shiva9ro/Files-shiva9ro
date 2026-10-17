@@ -1,4 +1,4 @@
-﻿// Copyright (c) Files Community
+// Copyright (c) Files Community
 // Licensed under the MIT License.
 
 using Files.App.Helpers.Application;
@@ -89,11 +89,7 @@ namespace Files.App.Helpers
 		public static string AppIconPath => _appIconPath.Value;
 
 		private static readonly Lazy<string> _appIconPath = new(() =>
-			SystemIO.Path.Combine(Package.Current.InstalledPath, AppEnvironment switch
-			{
-				AppEnvironment.SideloadPreview or AppEnvironment.StorePreview => Constants.AssetPaths.PreviewLogo,
-				_ => Constants.AssetPaths.StableLogo
-			}));
+			SystemIO.Path.Combine(Package.Current.InstalledPath, Constants.AssetPaths.CustomLogo));
 
 		/// <summary>
 		/// Initializes the app components.

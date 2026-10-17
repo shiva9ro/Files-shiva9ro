@@ -63,6 +63,7 @@ namespace Files.App
 			public const string DevLogo = "Assets/AppTiles/Dev/Logo.ico";
 			public const string PreviewLogo = "Assets/AppTiles/Preview/Logo.ico";
 			public const string StableLogo = "Assets/AppTiles/Release/Logo.ico";
+			public const string CustomLogo = "Assets/AppTiles/Shiva9ro/Logo.ico";
 		}
 
 		public static class UI
@@ -172,11 +173,11 @@ namespace Files.App
 
 		public static class ExternalUrl
 		{
-			public const string GitHubRepoUrl = @"https://github.com/files-community/Files";
+			public const string GitHubRepoUrl = @"https://github.com/shiva9ro/Files-shiva9ro";
 			public const string DocumentationUrl = @"https://files.community/docs";
 			public const string DiscordUrl = @"https://discord.gg/files";
-			public const string FeatureRequestUrl = @"https://discord.gg/files";
-			public const string BugReportUrl = @"https://github.com/files-community/Files/issues/new?labels=bug&template=bug_report.yml";
+			public const string FeatureRequestUrl = @"https://github.com/shiva9ro/Files-shiva9ro#support";
+			public const string BugReportUrl = @"https://github.com/shiva9ro/Files-shiva9ro#support";
 			public const string PrivacyPolicyUrl = @"https://files.community/privacy";
 			public const string SupportUsUrl = @"https://files.community/sponsor";
 			public const string CrowdinUrl = @"https://crowdin.com/project/files-app";

@@ -1,51 +1,57 @@
-<p align="center">
-  <img alt="Files hero image" src="./assets/ReadmeHero.png" />
-</p>
+# Files (shiva9ro)
 
-<p align="center">
-  <a style="text-decoration:none" href="https://files.community/">
-    <img src="https://img.shields.io/badge/Files-Website-F9B81F" alt="Files Website" /></a>
-  <a style="text-decoration:none" href="https://github.com/files-community/Files/actions/workflows/ci.yml">
-    <img src="https://github.com/files-community/Files/actions/workflows/ci.yml/badge.svg" alt="Files CI Status" /></a>
-  <a style="text-decoration:none" href="https://crowdin.com/project/files-app">
-    <img src="https://badges.crowdin.net/files-app/localized.svg" alt="Files Localization Status" /></a>
-  <a style="text-decoration:none" href="https://discord.gg/files">
-    <img src="https://img.shields.io/discord/725513575971684472?label=Discord&color=7289da" alt="Files Discord" /></a>
-</p>
+![Files (shiva9ro) icon](../src/Files.App/Assets/AppTiles/Shiva9ro/Square44x44Logo.targetsize-256.png)
 
-Files is a modern file manager that helps users organize their files and folders. Our mission with Files is to build the best file manager for Windows, and we’re proud to be building it out in the open so everyone can participate. User feedback helps shape the features we work on, & the bug reports on GitHub help to make Files more reliable. Built and maintained by the open-source community, Files features robust multitasking experiences, file tags, deep integrations, and an intuitive design.
+**Unofficial personal fork of [Files](https://github.com/files-community/Files), based on v4.3.**
+This is not an official Files release and is not affiliated with, endorsed by,
+or supported by Files Community. For the official application, visit
+[files.community](https://files.community/).
 
-## Installing and running Files
+## Changes
 
-Files is a community-driven project that depends on your support to grow and improve. Please consider purchasing Files through the Microsoft Store or supporting us on GitHub if you use the classic installer.
+- Native OLE drag-and-drop handling for elevated/UAC-disabled Windows environments,
+  adapted from shiva9ro's ModernFileManager implementation and integrated with
+  Files' existing storage operations.
+- Separate intermediate output for the Win32/x64 file dialogs to avoid concurrent
+  writes during a solution build.
+- Independent package identity (`FilesShiva9ro`), execution alias
+  (`files-shiva9ro.exe`), and original teal folder/S icon.
 
-You can also use the preview version alongside the stable release to get early access to new features and improvements.
+This is a focused adaptation, not a promise of complete compatibility with every
+Windows configuration. Release/x64 has been tested locally; the cause of the
+previous Debug MSIX startup failure has not been established.
 
-<p align="left">
-  <!-- Store Badge -->
-  <a style="text-decoration:none" href="https://apps.microsoft.com/detail/9NGHP3DX8HDX?launch=true&mode=full">
-    <picture>
-      <source media="(prefers-color-scheme: light)" srcset="./assets/StoreBadge-dark.png" height="80" />
-      <img src="./assets/StoreBadge-light.png" height="80" /></picture></a>
-  &ensp;
-  <!-- Classic Installer Badge -->
-  <a style="text-decoration:none" href="https://files.community/download">
-    <picture>
-      <source media="(prefers-color-scheme: light)" srcset="./assets/ClassicInstallerBadge-dark.png" height="80" />
-      <img src="./assets/ClassicInstallerBadge-light.png" height="80" /></picture></a>
-</p>
+## Build and install
 
-## Building from source
+Use Visual Studio with the prerequisites described in the
+[upstream build documentation](https://files.community/docs/contributing/building-from-source).
+Select **Release / x64**, rebuild the solution, then create a sideload MSIX package
+for the same configuration. Packaging requires your own signing certificate.
+No signing private key or prebuilt installer is provided in this repository.
 
-Instructions for building the source code can be found on our [documentation site](https://files.community/docs/contributing/building-from-source).
+This installs separately from official Files and earlier FilesDev/FilesRibra
+packages. Its settings are separate. The package publisher remains `CN=Files`
+to match the local signing certificate; the displayed publisher is `shiva9ro`.
 
+## Licensing and credits
 
-## Contributing to Files
+Files Community and the upstream contributors retain copyright in their work.
+Keep the original copyright notices, [MIT license](../LICENSE-MIT),
+[MPL-2.0 license](../LICENSE-MPL), and [third-party notices](NOTICE.md).
+Each file retains its applicable license; the repository is not uniformly
+or optionally dual-licensed merely because it contains two license texts.
 
-Want to contribute to this project? Let us know with an [issue](https://github.com/files-community/Files/issues) that communicates your intent to create a [pull request](https://github.com/files-community/Files/pulls). Also, view our [contributing guidelines](https://github.com/files-community/Files/blob/main/.github/CONTRIBUTING.md) to make sure you're up to date on the coding conventions.
+Fork-specific additions are MIT-licensed unless otherwise stated. The new icon
+and its vector source are MIT-licensed under [branding/LICENSE](../branding/LICENSE).
+No ownership of the upstream Files name, logo, or trademarks is claimed.
 
-Looking for a place to start? Check out the [task board](https://github.com/orgs/files-community/projects/3/views/2), where you can sort tasks by size and priority.
+See [FORK-NOTICE.md](../FORK-NOTICE.md) for provenance, distribution information,
+and license scope. Applicable license texts and notices are also included by
+this project's packaging settings in the application's `Licenses` directory.
 
-## Screenshots
+## Support
 
-![Files](./assets/FilesScreenshot.png)
+This fork is provided as-is for personal use. There is no commitment to ongoing
+maintenance, support, or future upstream updates. Do not send issues caused by
+this fork to the upstream Files project. Upstream documentation, contributor
+credits, and third-party notices remain attributable to their original authors.

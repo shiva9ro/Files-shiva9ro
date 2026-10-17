@@ -1,3 +1,6 @@
+// Copyright (c) 2026 shiva9ro
+// SPDX-License-Identifier: MIT
+
 using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;

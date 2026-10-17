@@ -34,7 +34,7 @@
         <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
         <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
         <PublishReadyToRunComposite Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRunComposite>
-        <ApplicationIcon>Assets\AppTiles\Release\Logo.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\AppTiles\Shiva9ro\Logo.ico</ApplicationIcon>
         <IsTrimmable>true</IsTrimmable>
         <IsAotCompatible>true</IsAotCompatible>
         <IlcGenerateMstatFile>true</IlcGenerateMstatFile>
@@ -165,6 +165,14 @@
 
     <ItemGroup>
         <AdditionalFiles Include="Strings\en-US\Resources.resw" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\..\LICENSE-MIT" Link="Licenses\LICENSE-MIT.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+        <Content Include="..\..\LICENSE-MPL" Link="Licenses\LICENSE-MPL.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+        <Content Include="..\..\.github\NOTICE.md" Link="Licenses\THIRD-PARTY-NOTICES.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+        <Content Include="..\..\FORK-NOTICE.md" Link="Licenses\FORK-NOTICE.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+        <Content Include="..\..\branding\LICENSE" Link="Licenses\BRANDING-MIT.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     </ItemGroup>
 
     <!-- Files.App.Server is an out-of-process COM server, not a project reference.
