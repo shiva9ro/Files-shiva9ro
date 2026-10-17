@@ -91,7 +91,6 @@ namespace Files.App.Helpers
 		private static readonly Lazy<string> _appIconPath = new(() =>
 			SystemIO.Path.Combine(Package.Current.InstalledPath, AppEnvironment switch
 			{
-				AppEnvironment.Dev => Constants.AssetPaths.DevLogo,
 				AppEnvironment.SideloadPreview or AppEnvironment.StorePreview => Constants.AssetPaths.PreviewLogo,
 				_ => Constants.AssetPaths.StableLogo
 			}));
@@ -610,7 +609,7 @@ namespace Files.App.Helpers
 						// Try to re-launch and start over
 						MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(async () =>
 						{
-							await Launcher.LaunchUriAsync(new Uri("files-dev:"));
+							await Launcher.LaunchUriAsync(new Uri("files-ribra:"));
 						})
 						.Wait(100);
 					}

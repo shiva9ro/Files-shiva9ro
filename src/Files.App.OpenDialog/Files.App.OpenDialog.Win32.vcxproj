@@ -43,7 +43,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\artifacts\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</OutDir>
-    <IntermediateOutputPath>..\..\artifacts\intermediates\$(Platform)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <IntDir>$(ProjectDir)..\..\artifacts\intermediates\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <TargetName>Files.App.OpenDialog$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -51,7 +51,7 @@
     <LinkIncremental>false</LinkIncremental>
     <UseDebugLibraries>false</UseDebugLibraries>
     <OutDir>..\..\artifacts\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</OutDir>
-    <IntermediateOutputPath>..\..\artifacts\intermediates\$(Platform)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <IntDir>$(ProjectDir)..\..\artifacts\intermediates\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <TargetName>Files.App.OpenDialog$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -60,9 +60,11 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
       <HeaderFileName>CustomOpenDialog_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>CustomOpenDialog_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>CustomOpenDialog_p.c</ProxyFileName>
@@ -172,7 +174,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CustomOpenDialog_i.h" />
+    <ClInclude Include="$(IntDir)CustomOpenDialog_i.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="FilesOpenDialog.h" />
     <ClInclude Include="framework.h" />
@@ -181,7 +183,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UndefInterfaces.h" />
     <ClCompile Include="CustomOpenDialog.cpp" />
-    <ClCompile Include="CustomOpenDialog_i.c">
+    <ClCompile Include="$(IntDir)CustomOpenDialog_i.c">
       <CompileAsManaged>false</CompileAsManaged>
       <PrecompiledHeader>
       </PrecompiledHeader>

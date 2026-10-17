@@ -6,6 +6,7 @@ using Files.App.Controls;
 using Files.App.Helpers.ContextFlyouts;
 using Files.App.UserControls.Menus;
 using Files.App.ViewModels.Layouts;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -32,7 +33,7 @@ namespace Files.App.Views.Layouts
 	/// <summary>
 	/// Represents the base class which every layout page must derive from
 	/// </summary>
-	public abstract class BaseLayoutPage : Page, IBaseLayoutPage, INotifyPropertyChanged
+	public abstract partial class BaseLayoutPage : Page, IBaseLayoutPage, INotifyPropertyChanged
 	{
 		// Dependency injections
 
@@ -103,7 +104,7 @@ namespace Files.App.Views.Layouts
 			=> App.AppModel;
 
 		public bool AllowItemDrag
-			=> WindowContext.CanDragAndDrop;
+			=> WindowContext.CanDragAndDrop || (MainWindow.Instance.IsNativeDropEnabled && CanUseNativeDrop);
 
 		protected FastContextFlyout ItemContextFlyoutHost { get; } = new();
 		protected FastContextFlyout BaseContextFlyoutHost { get; } = new();
@@ -333,6 +334,7 @@ namespace Files.App.Views.Layouts
 		{
 			ItemManipulationModel = new ItemManipulationModel();
 
+			Loaded += NativeDrop_Loaded;
 			HookBaseEvents();
 			HookEvents();
 
@@ -1034,36 +1036,79 @@ namespace Files.App.Views.Layouts
 					return;
 				}
 
+				if (MainWindow.Instance.IsNativeDropEnabled && !CanUseNativeDrop)
+				{
+					e.Cancel = true;
+					return;
+				}
+
 				var itemList = e.Items.OfType<ListedItem>().ToList();
 				var firstItem = itemList.FirstOrDefault();
 				var sortedItems = SortingHelper.OrderFileList(itemList, folderSettings.DirectorySortOption, folderSettings.DirectorySortDirection, folderSettings.SortDirectoriesAlongsideFiles, folderSettings.SortFilesFirst).ToList();
 				var orderedItems = sortedItems.SkipWhile(x => x != firstItem).Concat(sortedItems.TakeWhile(x => x != firstItem)).ToList();
 
-				var shellItemList = SafetyExtensions.IgnoreExceptions(() => orderedItems.Select(item => new ShellItem(item.GetRequiredPath())).ToArray());
-				try
+				if (orderedItems.Count > 0 &&
+					!instanceViewModel.IsPageTypeRecycleBin &&
+					!instanceViewModel.IsPageTypeZipFolder &&
+					!instanceViewModel.IsPageTypeFtp &&
+					!instanceViewModel.IsPageTypeMtpDevice &&
+					orderedItems.All(item => !item.IsRecycleBinItem &&
+						Path.IsPathFullyQualified(item.GetRequiredPath()) &&
+						!ZipStorageFolder.IsZipPath(item.GetRequiredPath(), includeRoot: false)))
 				{
-					if (shellItemList?[0].FileSystemPath is not null && !instanceViewModel.IsPageTypeSearchResults)
+					var paths = orderedItems.Select(item => item.GetRequiredPath()).ToArray();
+					e.Data.RequestedOperation = DataPackageOperation.Copy | DataPackageOperation.Move | DataPackageOperation.Link;
+					e.Data.SetData(FileDropData.Format, FileDropData.CreateStream(paths));
+					e.Data.SetDataProvider(StandardDataFormats.StorageItems, async request =>
 					{
-						var dataObject = ShellDataObject.Create(shellItemList);
-						if (ShellDataObject.GetShellIdListArray(dataObject) is byte[] data)
+						var deferral = request.GetDeferral();
+						try
 						{
-							var stream = new MemoryStream(data).AsRandomAccessStream();
-							e.Data.SetData(ShellDataObject.ShellIdListArrayFormat, stream);
+							var items = new List<IStorageItem>();
+							foreach (var item in orderedItems)
+								items.Add(item.IsFolder
+									? await StorageFolder.GetFolderFromPathAsync(item.GetRequiredPath())
+									: await StorageFile.GetFileFromPathAsync(item.GetRequiredPath()));
+							request.SetData(items.ToArray());
+						}
+						catch (Exception ex)
+						{
+							App.Logger.LogWarning(ex, "Could not provide dragged StorageItems.");
+						}
+						finally
+						{
+							deferral.Complete();
+						}
+					});
+				}
+				else
+				{
+					var shellItemList = SafetyExtensions.IgnoreExceptions(() => orderedItems.Select(item => new ShellItem(item.GetRequiredPath())).ToArray());
+					try
+					{
+						if (shellItemList?[0].FileSystemPath is not null && !instanceViewModel.IsPageTypeSearchResults)
+						{
+							var dataObject = ShellDataObject.Create(shellItemList);
+							if (ShellDataObject.GetShellIdListArray(dataObject) is byte[] data)
+							{
+								var stream = new MemoryStream(data).AsRandomAccessStream();
+								e.Data.SetData(ShellDataObject.ShellIdListArrayFormat, stream);
+							}
+						}
+						else
+						{
+							// Only support IStorageItem capable paths
+							var storageItemList = orderedItems.Where(x => !(x.IsHiddenItem && x.IsLinkItem && x.IsRecycleBinItem && x.IsShortcut)).Select(x => VirtualStorageItem.FromListedItem(x)).ToArray();
+							e.Data.SetStorageItems(storageItemList, false);
 						}
 					}
-					else
+					finally
 					{
-						// Only support IStorageItem capable paths
-						var storageItemList = orderedItems.Where(x => !(x.IsHiddenItem && x.IsLinkItem && x.IsRecycleBinItem && x.IsShortcut)).Select(x => VirtualStorageItem.FromListedItem(x)).ToArray();
-						e.Data.SetStorageItems(storageItemList, false);
-					}
-				}
-				finally
-				{
-					if (shellItemList is not null)
-					{
-						foreach (ShellItem item in shellItemList)
-							item.Dispose();
+						if (shellItemList is not null)
+						{
+							foreach (ShellItem item in shellItemList)
+								item.Dispose();
+						}
 					}
 				}
 
@@ -1565,6 +1610,8 @@ namespace Files.App.Views.Layouts
 				return;
 
 			UninitializeDrag(container);
+			if (MainWindow.Instance.IsNativeDropRequested)
+				return;
 			if ((item.PrimaryItemAttribute == StorageItemTypes.Folder && !StorageTrashBinService.IsUnderTrashBin(item.ItemPath))
 				|| item.IsExecutable
 				|| item.IsScriptFile)

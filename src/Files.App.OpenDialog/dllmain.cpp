@@ -7,7 +7,7 @@
 #include "pch.h"
 #include "framework.h"
 #include "resource.h"
-#include "CustomOpenDialog_i.h"
+#include <CustomOpenDialog_i.h>
 #include "dllmain.h"
 
 CCustomOpenDialogModule _AtlModule;

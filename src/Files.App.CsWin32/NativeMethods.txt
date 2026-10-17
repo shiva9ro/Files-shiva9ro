@@ -407,3 +407,10 @@ SBSP_ABSOLUTE
 K32EmptyWorkingSet
 GetDoubleClickTime
 SHChangeNotify
+IDropTarget
+RegisterDragDrop
+RevokeDragDrop
+EnumChildWindows
+GetClassNameW
+ScreenToClient
+CoWaitForMultipleHandles

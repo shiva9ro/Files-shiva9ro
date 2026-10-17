@@ -769,6 +769,25 @@ namespace Files.App.Utils.Storage
 			var itemsList = new List<IStorageItemWithPath>();
 			var hasVirtualItems = false;
 
+			if (packageView.Contains(FileDropData.Format))
+			{
+				try
+				{
+					var paths = await FileDropData.ReadAsync(packageView);
+					if (paths.Count > 0)
+					{
+						return paths.Distinct(StringComparer.OrdinalIgnoreCase).Select(path =>
+							StorageHelpers.FromPathAndType(path, Win32Helper.HasFileAttribute(path, FileAttributes.Directory)
+								? FilesystemItemType.Directory : FilesystemItemType.File)).ToList();
+					}
+				}
+				catch (Exception ex)
+				{
+					// Keep Files' StorageItems, ANSI FileDrop and virtual-item fallbacks.
+					App.Logger.LogWarning(ex, "Could not read FileDrop paths.");
+				}
+			}
+
 			if (packageView.Contains(StandardDataFormats.StorageItems))
 			{
 				try

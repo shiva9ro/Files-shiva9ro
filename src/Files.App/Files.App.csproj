@@ -13,11 +13,11 @@
         <TargetPlatformMinVersion>$(MinimalWindowsVersion)</TargetPlatformMinVersion>
         <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
         <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-        <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+        <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
         <GenerateTestArtifacts>False</GenerateTestArtifacts>
         <AppxBundle>Always</AppxBundle>
         <DisableXbfLineInfo>False</DisableXbfLineInfo>
-        <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
+        <AppxBundlePlatforms>x64</AppxBundlePlatforms>
         <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
         <Nullable>Enable</Nullable>
         <NoWarn>$(NoWarn);CS8305</NoWarn>
@@ -34,7 +34,7 @@
         <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
         <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
         <PublishReadyToRunComposite Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRunComposite>
-        <ApplicationIcon>Assets\AppTiles\Dev\Logo.ico</ApplicationIcon>
+        <ApplicationIcon>Assets\AppTiles\Release\Logo.ico</ApplicationIcon>
         <IsTrimmable>true</IsTrimmable>
         <IsAotCompatible>true</IsAotCompatible>
         <IlcGenerateMstatFile>true</IlcGenerateMstatFile>
@@ -43,6 +43,8 @@
 
     <PropertyGroup>
         <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+        <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+        <PackageCertificateThumbprint>D81B00A90D3521ED981CFB8620668BA011C7637D</PackageCertificateThumbprint>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(SENTRY_AUTH_TOKEN)' != ''">
@@ -69,7 +71,7 @@
         <_WindowsAppRuntimeBootstrapLibrary Include="@(WindowsAppSdkComponentPackages->'%(FullPath)lib\native\$(Platform)\Microsoft.WindowsAppRuntime.Bootstrap.lib')" />
         <NativeLibrary Include="runtimeobject.lib" />
         <NativeLibrary Include="mpr.lib" />
-        <NativeLibrary Include="@(_WindowsAppRuntimeBootstrapLibrary->Exists())" />
+        <NativeLibrary Include="@(_WindowsAppRuntimeBootstrapLibrary-&gt;Exists())" />
     </ItemGroup>
   
     <ItemGroup>
@@ -168,8 +170,6 @@
     <!-- Files.App.Server is an out-of-process COM server, not a project reference.
          Build it before we resolve assemblies so its .winmd is available for CsWinRT. -->
     <Target Name="BuildFilesAppServer" BeforeTargets="ResolveAssemblyReferences">
-        <MSBuild Projects="..\Files.App.Server\Files.App.Server.csproj"
-                 Targets="Build"
-                 Properties="Configuration=$(Configuration);Platform=$(Platform)" />
+        <MSBuild Projects="..\Files.App.Server\Files.App.Server.csproj" Targets="Build" Properties="Configuration=$(Configuration);Platform=$(Platform)" />
     </Target>
 </Project>

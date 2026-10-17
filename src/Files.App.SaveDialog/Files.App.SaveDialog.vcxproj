@@ -42,7 +42,7 @@
     <IgnoreImportLibrary>true</IgnoreImportLibrary>
     <LinkIncremental>true</LinkIncremental>
     <OutDir>..\..\artifacts\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</OutDir>
-    <IntermediateOutputPath>..\..\artifacts\intermediates\$(Platform)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <IntDir>$(ProjectDir)..\..\artifacts\intermediates\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <TargetName>Files.App.SaveDialog$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)'!='Debug'">
@@ -50,7 +50,7 @@
     <LinkIncremental>false</LinkIncremental>
     <UseDebugLibraries>false</UseDebugLibraries>
     <OutDir>..\..\artifacts\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</OutDir>
-    <IntermediateOutputPath>..\..\artifacts\intermediates\$(Platform)\$(MSBuildProjectName)\</IntermediateOutputPath>
+    <IntDir>$(ProjectDir)..\..\artifacts\intermediates\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
     <TargetName>Files.App.SaveDialog$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup>
@@ -59,9 +59,11 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(IntDir);$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
+      <OutputDirectory>$(IntDir)</OutputDirectory>
       <HeaderFileName>CustomSaveDialog_i.h</HeaderFileName>
       <InterfaceIdentifierFileName>CustomSaveDialog_i.c</InterfaceIdentifierFileName>
       <ProxyFileName>CustomSaveDialog_p.c</ProxyFileName>
@@ -171,7 +173,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CustomSaveDialog_i.h" />
+    <ClInclude Include="$(IntDir)CustomSaveDialog_i.h" />
     <ClInclude Include="dllmain.h" />
     <ClInclude Include="FilesDialogEvents.h" />
     <ClInclude Include="FilesSaveDialog.h" />
@@ -181,7 +183,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UndefInterfaces.h" />
     <ClCompile Include="CustomSaveDialog.cpp" />
-    <ClCompile Include="CustomSaveDialog_i.c">
+    <ClCompile Include="$(IntDir)CustomSaveDialog_i.c">
       <CompileAsManaged>false</CompileAsManaged>
       <PrecompiledHeader>
       </PrecompiledHeader>

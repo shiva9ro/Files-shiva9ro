@@ -35,7 +35,7 @@ namespace Files.App
 			InitializeComponent();
 
 			ExtendsContentIntoTitleBar = true;
-			Title = "Files";
+			Title = Package.Current.DisplayName;
 			AppWindow.TitleBar.ButtonBackgroundColor = Colors.Transparent;
 			AppWindow.TitleBar.ButtonInactiveBackgroundColor = Colors.Transparent;
 			AppWindow.TitleBar.ButtonPressedBackgroundColor = Colors.Transparent;
@@ -104,8 +104,8 @@ namespace Files.App
 			{
 				case ILaunchActivatedEventArgs launchArgs:
 					if (launchArgs.Arguments is not null &&
-						(CommandLineParser.SplitArguments(launchArgs.Arguments, true)[0].EndsWith($"files-dev.exe", StringComparison.OrdinalIgnoreCase)
-						|| CommandLineParser.SplitArguments(launchArgs.Arguments, true)[0].EndsWith($"files-dev", StringComparison.OrdinalIgnoreCase)
+						(CommandLineParser.SplitArguments(launchArgs.Arguments, true)[0].EndsWith($"files-ribra.exe", StringComparison.OrdinalIgnoreCase)
+						|| CommandLineParser.SplitArguments(launchArgs.Arguments, true)[0].EndsWith($"files-ribra", StringComparison.OrdinalIgnoreCase)
 						|| CommandLineParser.SplitArguments(launchArgs.Arguments, true)[0].Equals(Path.Join(Package.Current.InstalledPath, "Files.exe"), StringComparison.OrdinalIgnoreCase)))
 					{
 						// WINUI3: When launching from commandline the argument is not ICommandLineActivatedEventArgs (#10370)
@@ -135,7 +135,7 @@ namespace Files.App
 					break;
 
 				case IProtocolActivatedEventArgs eventArgs:
-					if (eventArgs.Uri.AbsoluteUri == "files-dev:")
+					if (eventArgs.Uri.AbsoluteUri == "files-ribra:")
 					{
 						rootFrame.Navigate(typeof(MainPage), null, new SuppressNavigationTransitionInfo());
 
