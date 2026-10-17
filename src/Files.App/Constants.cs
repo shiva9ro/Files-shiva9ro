@@ -253,7 +253,7 @@ namespace Files.App
 				"FilesPreview", // sideload preview
 				"49306atecsolution.FilesPreview", // store preview
 				"FilesDev", // dev
-				"FilesRibra", // ribra fork
+				"FilesShiva9ro", // shiva9ro fork
 			};
 		}
 

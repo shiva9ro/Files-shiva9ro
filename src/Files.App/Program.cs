@@ -273,8 +273,8 @@ namespace Files.App
 			var cmdLaunchArgs = activatedArgs.Data is ILaunchActivatedEventArgs launchArgs &&
 				launchArgs.Arguments is not null &&
 				CommandLineParser.SplitArguments(launchArgs.Arguments, true).FirstOrDefault() is string arg0 &&
-				(arg0.EndsWith($"files-ribra.exe", StringComparison.OrdinalIgnoreCase) ||
-				arg0.EndsWith($"files-ribra", StringComparison.OrdinalIgnoreCase)) ? launchArgs.Arguments : null;
+				(arg0.EndsWith($"files-shiva9ro.exe", StringComparison.OrdinalIgnoreCase) ||
+				arg0.EndsWith($"files-shiva9ro", StringComparison.OrdinalIgnoreCase)) ? launchArgs.Arguments : null;
 			var cmdProtocolArgs = activatedArgs.Data is IProtocolActivatedEventArgs protocolArgs &&
 				protocolArgs.Uri.Query.TrimStart('?').Split('=') is string[] parsedArgs &&
 				parsedArgs.Length == 2 && parsedArgs[0] == "cmd" ? Uri.UnescapeDataString(parsedArgs[1]) : null;

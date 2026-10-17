@@ -609,7 +609,7 @@ namespace Files.App.Helpers
 						// Try to re-launch and start over
 						MainWindow.Instance.DispatcherQueue.EnqueueOrInvokeAsync(async () =>
 						{
-							await Launcher.LaunchUriAsync(new Uri("files-ribra:"));
+							await Launcher.LaunchUriAsync(new Uri("files-shiva9ro:"));
 						})
 						.Wait(100);
 					}

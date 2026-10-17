@@ -296,7 +296,7 @@ namespace Files.App.Utils.Taskbar
 			{
 				_lastLaunchDate = DateTime.Now;
 
-				_ = Launcher.LaunchUriAsync(new Uri("files-ribra:"));
+				_ = Launcher.LaunchUriAsync(new Uri("files-shiva9ro:"));
 			}
 			else
 				MainWindow.Instance.Activate();

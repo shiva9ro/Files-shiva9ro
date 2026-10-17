@@ -123,7 +123,7 @@ namespace Files.App.ViewModels.Settings
 			AppLifecycleHelper.SaveSessionTabs();
 
 			// Launches a new instance of Files
-			await Launcher.LaunchUriAsync(new Uri("files-ribra:"));
+			await Launcher.LaunchUriAsync(new Uri("files-shiva9ro:"));
 
 			// Closes the current instance
 			Environment.Exit(0);
