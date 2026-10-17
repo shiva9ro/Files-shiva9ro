@@ -20,7 +20,7 @@
         Version="4.3.6.0" />
 
     <Properties>
-        <DisplayName>Files — shiva9ro版</DisplayName>
+        <DisplayName>Files (shiva9ro)</DisplayName>
         <PublisherDisplayName>Yair A</PublisherDisplayName>
         <Logo>Assets\AppTiles\Release\StoreLogo.png</Logo>
         <desktop6:FileSystemWriteVirtualization>disabled</desktop6:FileSystemWriteVirtualization>
@@ -95,7 +95,7 @@
             desktop4:SupportsMultipleInstances="true">
 
             <uap:VisualElements
-                DisplayName="Files — shiva9ro版"
+                DisplayName="Files (shiva9ro)"
                 Description="Organize your files and folders easily. Robust multitasking experiences, helpful tags, and deep integrations add to an intuitive design, made by the community."
                 Square150x150Logo="Assets\AppTiles\Release\Square150x150Logo.png"
                 Square44x44Logo="Assets\AppTiles\Release\Square44x44Logo.png"
@@ -105,7 +105,7 @@
                     Wide310x150Logo="Assets\AppTiles\Release\Wide310x150Logo.png"
                     Square71x71Logo="Assets\AppTiles\Release\Small71x71Logo.png"
                     Square310x310Logo="Assets\AppTiles\Release\Large310x310Logo.png"
-                    ShortName="Files — shiva9ro版">
+                    ShortName="Files (shiva9ro)">
                     <uap:ShowNameOnTiles>
                         <uap:ShowOn Tile="square150x150Logo" />
                         <uap:ShowOn Tile="wide310x150Logo" />
@@ -141,7 +141,7 @@
                     <uap5:StartupTask
                       TaskId="3AA55462-A5FA-4933-88C4-712D0B6CDEBB"
                       Enabled="false"
-                      DisplayName="Files — shiva9ro版" />
+                      DisplayName="Files (shiva9ro)" />
                 </uap5:Extension>
 
                 <Extension Category="windows.updateTask" EntryPoint="Files.App.BackgroundTasks.UpdateTask" />
