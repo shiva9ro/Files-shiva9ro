@@ -1,3 +1,40 @@
+## UAC無効環境でのドラッグ＆ドロップ修正
+
+このリポジトリは Files v4.3 の非公式forkです。UAC（ユーザーアカウント制御）が
+無効なWindowsで管理者として動く場合など、Filesが昇格しているときのファイル・
+フォルダーのドラッグ＆ドロップを修正しています。
+
+昇格時のドロップ受信には、WinUIのドロップ処理に代わってWindows OLEの
+`IDropTarget` を使います。受信した `CF_HDROP` データからファイルやフォルダーの
+パスを取得し、ドロップ先を判定して、Filesの既存のコピー・移動処理に渡します。
+Filesのウィンドウ外へドラッグしたときは、OLEのドラッグ処理に引き継ぎます。
+
+- [MainWindow.NativeDrop.cs](../src/Files.App/MainWindow.NativeDrop.cs) — ドロップの受信を有効にし、ドロップ先を判定します。
+- [OleFileReceiver.cs](../src/Files.App/Utils/Shell/OleFileReceiver.cs) — `IDropTarget` を実装し、受信データからパスを取り出します。
+- [BaseLayoutPage.NativeDrop.cs](../src/Files.App/Views/Layouts/BaseLayoutPage.NativeDrop.cs) — 取得したパスを既存のコピー・移動処理に渡します。
+- [MainWindow.LocalDrag.cs](../src/Files.App/MainWindow.LocalDrag.cs) と [OleFileSender.cs](../src/Files.App/Utils/Shell/OleFileSender.cs) — ウィンドウ内のドラッグと、外へ出たときのOLEへの引き継ぎを扱います。
+
+[上流 v4.3 とD&D修正版のソース差分を見る](https://github.com/shiva9ro/Files-shiva9ro/compare/v4.3...v4.3-uac-drag-drop)
+
+## Drag-and-drop fix for UAC-disabled Windows
+
+This unofficial fork of Files v4.3 fixes file drag-and-drop for elevated Files
+sessions, including administrator sessions on Windows with User Account
+Control (UAC) disabled.
+
+For elevated sessions, Files registers a native Windows OLE `IDropTarget`
+in place of its WinUI drop handlers. The target reads file and folder paths
+from the incoming OLE `CF_HDROP` data. Files resolves the drop destination
+and hands the paths to its existing copy or move operations. When a drag
+leaves the Files window, Files starts an outbound OLE drag.
+
+- [MainWindow.NativeDrop.cs](../src/Files.App/MainWindow.NativeDrop.cs) — enables native drop handling and resolves the destination.
+- [OleFileReceiver.cs](../src/Files.App/Utils/Shell/OleFileReceiver.cs) — implements `IDropTarget` and extracts file paths.
+- [BaseLayoutPage.NativeDrop.cs](../src/Files.App/Views/Layouts/BaseLayoutPage.NativeDrop.cs) — connects the drop to Files' existing copy and move operations.
+- [MainWindow.LocalDrag.cs](../src/Files.App/MainWindow.LocalDrag.cs) and [OleFileSender.cs](../src/Files.App/Utils/Shell/OleFileSender.cs) — handle drags within the window and the handoff to outbound OLE.
+
+[Compare upstream v4.3 with the tagged drag-and-drop fix](https://github.com/shiva9ro/Files-shiva9ro/compare/v4.3...v4.3-uac-drag-drop)
+
 <p align="center">
   <img alt="Files hero image" src="./assets/ReadmeHero.png" />
 </p>
