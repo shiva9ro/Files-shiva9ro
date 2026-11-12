@@ -999,6 +999,7 @@
 					DragEnter="ItemsLayout_DragEnter"
 					DragItemsCompleted="FileList_DragItemsCompleted"
 					DragItemsStarting="FileList_DragItemsStarting"
+					DragStarting="FileList_DragStarting"
 					DragLeave="ItemsLayout_DragLeave"
 					DragOver="ItemsLayout_DragOver"
 					Drop="ItemsLayout_Drop"

@@ -60,9 +60,11 @@
         <DirectPInvoke Include="api-ms-win-core-winrt-string-l1-1-0" />
         <DirectPInvoke Include="CRYPT32" />
         <DirectPInvoke Include="GDI32" />
+        <DirectPInvoke Include="GDIPLUS" />
         <DirectPInvoke Include="KERNEL32.dll" />
         <DirectPInvoke Include="Microsoft.WindowsAppRuntime.Bootstrap" />
         <DirectPInvoke Include="OLE32" />
+        <DirectPInvoke Include="SHELL32!SHCreateStdEnumFmtEtc" />
         <DirectPInvoke Include="OLEAUT32" />
         <DirectPInvoke Include="USER32" />
         <DirectPInvoke Include="MPR" />
@@ -70,6 +72,8 @@
         <NativeLibrary Include="runtimeobject.lib" />
         <NativeLibrary Include="mpr.lib" />
         <NativeLibrary Include="@(_WindowsAppRuntimeBootstrapLibrary->Exists())" />
+        <NativeLibrary Include="shell32.lib" />
+        <NativeLibrary Include="gdiplus.lib" />
     </ItemGroup>
   
     <ItemGroup>
