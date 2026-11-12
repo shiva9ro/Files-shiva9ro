@@ -35,6 +35,14 @@ leaves the Files window, Files starts an outbound OLE drag.
 
 [Compare upstream v4.3 with the tagged drag-and-drop fix](https://github.com/shiva9ro/Files-shiva9ro/compare/v4.3...v4.3-uac-drag-drop)
 
+---
+
+## Original Files project
+
+The following content is retained from the upstream Files repository.
+Download links and contribution instructions below refer to the
+official Files project, not this modified fork.
+
 <p align="center">
   <img alt="Files hero image" src="./assets/ReadmeHero.png" />
 </p>
